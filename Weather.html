@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <title>Weather</title>
+      <style>
+          .container{
+         height: 100vh;
+         width: 100%;
+         position: fixed;
+         top: 0px;
+         left: 0px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         }
+
+         .temperature-con{
+         height: 430px;
+         width: 300px;
+         box-shadow: 0px 0px 20px grey;
+         border-radius: 30px;
+         padding: 20px;
+         }
+
+         button[type="button"]{
+         height: 40px;
+         width: 90%;
+         margin-left: 5%;
+         border: none;
+         outline: none;
+         background-color:grey;
+         border-radius: 10px;
+         color: white;
+         font-size: 20px;
+         font-weight: bolder;
+         }
+         Legend{
+            color: blue;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <div class="temperature-con">
+            <center>
+               <img height="150px" width="300px" src="https://nordicapis.com/wp-content/uploads/6-Best-Free-and-Paid-Weather-APIs.png">
+            </center>
+      <fieldset>
+         <Legend style="font-weight: bolder;">WEATHER APP</legend>
+         <br>
+         <br>
+         <form>
+            <label style="font-weight: bolder;">CITY NAME : </label>
+            <input type="text" placeholder="City Name" id="cityName">
+            <br>
+            <br>
+            <table>
+               <tr>
+                  <td style="font-weight: bolder;">CITY NAME </td>
+                  <td id="city"> Pune</td>
+               </tr>
+               <tr>
+                  <td style="font-weight: bolder;">Temperature</td>
+                  <td id="temp">27 °C</td>
+               </tr>
+               <tr>
+                  <td style="font-weight: bolder;">Humditiy </td>
+                  <td id="hum">20%</td>
+               </tr>
+               <tr>
+                  <td style="font-weight: bolder;">Wind </td>
+                  <td id="wind">8 km/hr</td>
+               </tr>
+            </table>
+            <br>
+            <button type="button" onclick="fetchData()">FETCH</button>
+         </form>
+      </fieldset>
+      </div>
+   </div>
+      <script>
+         let apiKey="dbc6232275b556e736a5ef85bb817a2c";
+         let city = document.getElementById("city");
+         let temp = document.getElementById("temp");
+         let hum = document.getElementById ("hum");
+         let wind = document.getElementById("wind");
+         function fetchData(){
+         let cityName = document.getElementById("cityName").value;
+         if(cityName!=""){
+         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`)
+         .then(resp=>resp.json())
+         .then(data=>{
+         city.innerHTML = data.name;
+         temp.innerHTML =((data.main.temp)-273.15).toFixed(2)+"°C";
+         hum.innerHTML = data.main.humidity + "%"
+         wind.innerHTML = data.wind.speed +"km/hr"
+         })}
+         else{
+         alert("Enter a city name")
+         }
+         }
+      </script>
+ </body>
+ </html>
